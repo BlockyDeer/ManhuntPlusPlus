@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public final class GameState {
     }
 
     public void updateRunner(String playerId) {
-        hunterList.remove(playerId);
+        runnerList.remove(playerId);
         runnerList.add(playerId);
     }
 
@@ -40,7 +41,7 @@ public final class GameState {
         return !gameStart;
     }
 
-    public @NotNull Location getNearestRunnerLocation(@NotNull Player player) {
+    public @Nullable Player getNearestRunner(@NotNull Player player) {
         Player result = null;
         double lastDistance = Double.MAX_VALUE;
         for(Player playerIter : player.getWorld().getPlayers()) {
@@ -54,11 +55,7 @@ public final class GameState {
             }
         }
 
-        if (result != null) {
-            return result.getLocation();
-        } else {
-            return new Location(null, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
-        }
+        return result;
     }
 
     public void startGame() {
@@ -71,10 +68,19 @@ public final class GameState {
             } else {
                 player.setGameMode(GameMode.SPECTATOR);
             }
+            player.setInvulnerable(false);
         }
     }
 
     public static GameState getGameState() {
         return gameState;
+    }
+
+    public List<String> getRunnerList() {
+        return runnerList;
+    }
+
+    public List<String> getHunterList() {
+        return hunterList;
     }
 }
