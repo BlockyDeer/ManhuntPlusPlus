@@ -1,0 +1,11 @@
+name: ManhuntPlusPlus
+version: 1.0.0
+main: com.blockydeer.manhuntplusplus.ManhuntPlusPlus
+api-version: '1.16'
+commands:
+  manhunt:
+    description: main command of ManhuntPlusPlus
+    permission: manhuntplusplus.game
+permissions:
+  manhuntplusplus.game:
+    default: op
