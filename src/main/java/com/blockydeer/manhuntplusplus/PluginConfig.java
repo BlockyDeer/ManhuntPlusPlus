@@ -11,6 +11,7 @@ public final class PluginConfig {
     public boolean sendCompassPointToExact = true;
     public boolean autoStartGame = true;
     public int autoStartRadius = 5;
+    public RunnerWinCondition runnerWinCondition = RunnerWinCondition.END_POEM;
 
     public void init(@NotNull JavaPlugin plugin) {
         FileConfiguration config = plugin.getConfig();
@@ -20,5 +21,8 @@ public final class PluginConfig {
         sendCompassPointToExact = config.getBoolean("SendCompassPointToExact");
         autoStartGame = config.getBoolean("AutoStartGame");
         autoStartRadius = config.getInt("AutoStartRadius");
+
+        String s = config.getString("RunnerWinCondition");
+        runnerWinCondition = RunnerWinCondition.valueOf(s);
     }
 }

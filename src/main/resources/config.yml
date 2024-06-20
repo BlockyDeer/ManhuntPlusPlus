@@ -12,3 +12,8 @@ GetCompassOnGameStart: true
 AutoStartGame: true
 # 逃脱者逃跑判定半径
 AutoStartRadius: 5
+
+# 逃脱者胜利条件
+# 可设置的值有：ENDER_DRAGON（末影龙死亡）
+#          END_POEM（看到终末之诗，即进入返回主世界的末地传送门）
+RunnerWinCondition: END_POEM

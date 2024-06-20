@@ -1,10 +1,7 @@
 package com.blockydeer.manhuntplusplus;
 
 import com.blockydeer.manhuntplusplus.runnable.GameRealStartRunnable;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +14,7 @@ public final class GameState {
     private final Random radiusRand;
     private static final GameState gameState;
 
-    private boolean gameStart = false;
+    private boolean gameStart;
     private boolean gameReady = false;
 
     private final BukkitRunnable gameRealStartRunnable;
@@ -105,6 +102,15 @@ public final class GameState {
                     player.getInventory().addItem(preparedCompass);
                 }
             }
+        }
+    }
+
+    public void runnerWin() {
+        for (Player player: Bukkit.getOnlinePlayers()) {
+            player.setInvulnerable(true);
+            player.sendTitle(ChatColor.YELLOW + "游戏结束！", ChatColor.GREEN + "逃脱者胜利！", 10, 70, 20);
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 0.5f, 1.0f);
         }
     }
 
