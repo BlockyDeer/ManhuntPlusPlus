@@ -26,24 +26,28 @@ public final class CompassRightClickListener implements Listener {
         CompassMeta compassMeta = (CompassMeta) mainHandItem.getItemMeta();
 
         if (compassMeta != null) {
-            Player nearestRunner = GameState.getGameState().getNearestRunner(player);
+            GameState gameState = GameState.getGameState();
+            Player nearestRunner = gameState.getNearestRunner(player);
             if (nearestRunner == null) {
                 player.sendMessage("在该世界内没有找到逃脱者");
             }
             Location nearestRunnerLocation = nearestRunner.getLocation();
-            Location CompassPointTo;
+            Location compassPointTo;
             PluginConfig config = ManhuntPlusPlus.getInstance().getPluginConfig();
             if (config.doRandomOffset) {
-                CompassPointTo = RadiusRandom.radiusRandom(new Random(), nearestRunnerLocation, config.randomOffsetRadius);
+                compassPointTo = RadiusRandom.radiusRandom(gameState.getRandomDouble(), gameState.getRandomDouble(), nearestRunnerLocation, config.randomOffsetRadius);
             } else {
-                CompassPointTo = nearestRunnerLocation;
+                compassPointTo = nearestRunnerLocation;
             }
-            compassMeta.setLodestone(CompassPointTo);
+            compassMeta.setLodestone(compassPointTo);
             compassMeta.setLodestoneTracked(false);
             mainHandItem.setItemMeta(compassMeta);
-            String msg = String.format("找到逃脱者： %s。在位置：x=%d, y=?, z=%d",
-                    nearestRunner.getName(), nearestRunnerLocation.getBlockX(), nearestRunnerLocation.getBlockZ());
-            player.sendMessage(ChatColor.GOLD + msg);
+
+            if (config.sendCompassPointToExact) {
+                String msg = String.format("找到逃脱者： %s。在位置：x=%d, y=?, z=%d",
+                        nearestRunner.getName(), compassPointTo.getBlockX(), compassPointTo.getBlockZ());
+                player.sendMessage(ChatColor.GOLD + msg);
+            }
         } else {
             ManhuntPlusPlus.getInstance().getLogger().warning("Got null compassMeta.");
         }

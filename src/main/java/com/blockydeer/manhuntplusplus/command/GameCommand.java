@@ -1,6 +1,7 @@
 package com.blockydeer.manhuntplusplus.command;
 
 import com.blockydeer.manhuntplusplus.GameState;
+import com.blockydeer.manhuntplusplus.ManhuntPlusPlus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,9 +16,14 @@ public final class GameCommand implements CommandExecutor {
             return false;
         }
 
+        GameState gameState = GameState.getGameState();
         switch (args[0]) {
             case "start": {
-                GameState.getGameState().startGame();
+                if (!ManhuntPlusPlus.getInstance().getPluginConfig().autoStartGame) {
+                    gameState.startGame();
+                } else {
+                    gameState.setGameReady();
+                }
                 Bukkit.broadcastMessage(ChatColor.GREEN + "游戏开始！");
                 break;
             }
@@ -26,17 +32,17 @@ public final class GameCommand implements CommandExecutor {
                     return false;
                 }
                 if (args[1].equals("runner")) {
-                    GameState.getGameState().updateRunner(args[2]);
+                    gameState.updateRunner(args[2]);
                     Bukkit.broadcastMessage(ChatColor.GREEN + "成功设置 " + args[2] + "为逃脱者");
                 } else if (args[1].equals("hunter")) {
-                    GameState.getGameState().updateHunter(args[2]);
+                    gameState.updateHunter(args[2]);
                     Bukkit.broadcastMessage(ChatColor.GREEN + "成功设置 " + args[2] + "为猎人");
                 }
                 return false;
             }
             case "list": {
-                commandSender.sendMessage("Runner " + GameState.getGameState().getRunnerList().toString());
-                commandSender.sendMessage("Hunter" + GameState.getGameState().getHunterList().toString());
+                commandSender.sendMessage("Runner " + gameState.getRunnerList().toString());
+                commandSender.sendMessage("Hunter" + gameState.getHunterList().toString());
                 break;
             }
             default: {

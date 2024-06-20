@@ -1,2 +1,14 @@
+# 是否赋予猎人指南针获取到的实际位置一个偏移量
 DoRandomOffset: true
-RandomOffsetRadius: 15
+# 随机偏移最大偏移大小
+RandomOffsetRadius: 10
+# 猎人更新手中的指南针时是否告知指南针指向的具体坐标
+SendCompassPointToExact: true
+
+# 猎人开始游戏时是否获取指南针
+GetCompassOnGameStart: true
+
+# 逃脱者开始逃跑时是否自动开始
+AutoStartGame: true
+# 逃脱者逃跑判定半径
+AutoStartRadius: 5
