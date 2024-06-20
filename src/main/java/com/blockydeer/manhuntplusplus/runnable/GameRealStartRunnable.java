@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 
-public class GameRealStartRunnable extends BukkitRunnable {
+public final class GameRealStartRunnable extends BukkitRunnable {
     @Override
     public void run() {
         GameState gameState = GameState.getGameState();
